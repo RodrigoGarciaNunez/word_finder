@@ -7,7 +7,8 @@ import openpyxl
 #from tkinter_gui import tk
 import tkinter as tk
 from tkinter import ttk #para barra de carga
-#from tkinter.scrolledtext import ScrolledText
+
+
 
 
 
@@ -15,9 +16,10 @@ class finder():
     def __init__(self, output_text_1, output_text_2):
         self.output_text = output_text_1
         self.output_text_2 = output_text_2
+        self.file_check= {}
 
     def buscar_en_txt(self, ruta, palabra):
-        
+        self.file_check[ruta] = False
         found = False
         
         with open(ruta, 'r', encoding='utf-8', errors='ignore') as f:
@@ -28,6 +30,7 @@ class finder():
                     self.output_text.insert(tk.END, f" {palabra}", "negrita")
                     self.output_text.insert(tk.END, f" encontrada\n")
                     self.output_text.insert(tk.END, f"[TXT] {ruta} (línea {i}): {linea.strip()}\n\n")
+                    self.file_check[ruta] = True
                     found = True
         if found == False:
             print(f"[TXT] {ruta} (línea {i}): {linea.strip()}")
@@ -37,6 +40,7 @@ class finder():
             self.output_text_2.insert(tk.END, f"[TXT] {ruta} (línea {i}): {linea.strip()}\n\n")
 
     def buscar_en_pdf(self, ruta, palabra):
+        self.file_check[ruta] = False
         try:
             found = False
             with open(ruta, 'rb') as f:
@@ -49,6 +53,7 @@ class finder():
                         self.output_text.insert(tk.END, f" {palabra}", "negrita")
                         self.output_text.insert(tk.END, f" encontrada\n")
                         self.output_text.insert(tk.END, f"[PDF] {ruta} (página {i+1})\n\n")
+                        self.file_check[ruta] = True
                         found = True
             if found == False:
                 print(f"[PDF] {ruta}. Palabra no encontrada")
@@ -62,6 +67,7 @@ class finder():
             self.output_text_2.insert(tk.END, f"[PDF] No se pudo leer {ruta}\n\n")
 
     def buscar_en_docx(self, ruta, palabra):
+        self.file_check[ruta] = False
         found = False
         try:
             doc = Document(ruta)
@@ -72,6 +78,7 @@ class finder():
                     self.output_text.insert(tk.END, f" {palabra}", "negrita")
                     self.output_text.insert(tk.END, f" encontrada\n")
                     self.output_text.insert(tk.END, f"[DOCX] {ruta} (párrafo {i+1}): {p.text.strip()}\n\n")
+                    self.file_check[ruta] = True
                     found = True
             
             if found == False:
@@ -85,6 +92,7 @@ class finder():
             self.output_text_2.insert(tk.END, f"[DOCX] No se pudo leer {ruta}")
 
     def buscar_en_xlsx(self, ruta, palabra):
+        self.file_check[ruta] = False
         found = False
         try:
             wb = openpyxl.load_workbook(ruta, read_only=True, data_only=True)
@@ -98,6 +106,7 @@ class finder():
                             self.output_text.insert(tk.END, f" {palabra}", "negrita")
                             self.output_text.insert(tk.END, f" encontrada\n")
                             self.output_text.insert(tk.END, f"[XLSX] {ruta} (hoja '{hoja}')\n\n")
+                            self.file_check[ruta] = True
                             found = True
                             break
             if found == False:
@@ -112,6 +121,7 @@ class finder():
             self.output_text_2.insert(tk.END, f"[XLSX] No se pudo leer {ruta}")
 
     def buscar_en_rtf(self, ruta, palabra):
+        self.file_check[ruta] = False
         with open(ruta, "r", encoding="utf-8", errors="ignore") as f:
             contenido_rtf = f.read()
             texto = rtf_to_text(contenido_rtf)
@@ -121,6 +131,7 @@ class finder():
                 self.output_text.insert(tk.END, f" {palabra}", "negrita")
                 self.output_text.insert(tk.END, f" encontrada\n")
                 self.output_text.insert(tk.END, f"[RTF] {ruta}\n\n")
+                self.file_check[ruta] = True
                 return
             
             print(f"[RTF] {ruta}. Palabra NO encontrada")
@@ -134,10 +145,11 @@ class finder():
 
 
     def find_word_in_file(self, directorio, cadena):
-
+        
         for root, _,files in os.walk(directorio):
             for file in files:
                 ruta = os.path.join(root, file)
+                #self.file_check[ruta] = False
                 ext = file.lower().split('.')[-1]
 
                 if ext == 'txt':
@@ -152,4 +164,5 @@ class finder():
                     self.buscar_en_rtf(ruta, cadena)    
                 
                 else:
-                    print(f"No se puede buscar en el archivo {ruta}")
+                    print(f"Formato no soportado de {ruta}")
+
