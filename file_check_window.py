@@ -2,16 +2,24 @@ from word_finder import finder, tk
 from tkinter import PhotoImage
 from PIL import Image, ImageTk
 import os
+import sys
 import platform
 import subprocess
+
+
+def ruta_recurso(rel_path): #ralitive path
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, rel_path) #en exe
+    return os.path.join(os.path.abspath("."), rel_path) # en py
 
 
 def file_check_window(root:tk, finder:finder):
     emergent = tk.Toplevel(root)
     emergent.title("File Check")
 
-    img_ok =  cargar_img(path = "images/palomita.png")
-    img_not = cargar_img(path = "images/tache.png")
+    print(f"dir: {os.listdir(path='.')}")
+    img_ok =  cargar_img(path = ruta_recurso("images/palomita.png"))
+    img_not = cargar_img(path = ruta_recurso("images/tache.png"))
     files = finder.file_check
     num_columns =  2
     
