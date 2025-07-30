@@ -1,20 +1,20 @@
 from tkinter import filedialog, messagebox, font
 from tkinter.scrolledtext import ScrolledText
 from word_finder import finder, tk
-from file_check_window import file_check_window
+from file_check_window import file_check_frame
 
 def buscar():
     carpeta = entry_carpeta.get()
     palabra = entry_palabra.get()
-    output_text_foud.delete("1.0", tk.END)
+    #output_text_foud.delete("1.0", tk.END)
     
     if not carpeta or not palabra:
         messagebox.showwarning("Error", "Por favor ingresa carpeta y palabra.")
         return
-    output_text_foud.delete("1.0", tk.END)
-    output_text_not.delete("1.0", tk.END)
+    #output_text_foud.delete("1.0", tk.END)
+    #output_text_not.delete("1.0", tk.END)
     finder_.find_word_in_file(carpeta, palabra)
-    file_check_window(root, finder_)
+    fcf.file_check_window(root, finder_)
 
 def seleccionar_carpeta():
     carpeta = filedialog.askdirectory()
@@ -30,10 +30,9 @@ root = tk.Tk()
 root.geometry("1000x600") 
 root.title("Word Finder")
 
-
 # ---------- top frame ---------------------
 
-top_frame = tk.Frame(root, bg="lightgray", height=50)
+top_frame = tk.Frame(root, bg="blue", height=50)
 top_frame.pack(fill="x")
 
 # Etiqueta y entrada para carpeta
@@ -59,34 +58,35 @@ top_frame.grid_columnconfigure(2, weight=1)
 
 #--------- scrolled text frame ----------------------
 
-frame_status = tk.Frame(root, bg="lightgray", height=50)
-frame_status.pack(expand=True)
 
-tk.Label(frame_status, text= "Encontrado").grid(row=0, column= 0, padx=5, pady=5)
-tk.Label(frame_status, text= "No Encontrado").grid(row=0, column= 1, padx=5, pady=5)
-output_text_foud = ScrolledText(frame_status, width=100, height=40)
-output_text_foud.grid(row=1, column=0, padx=10, pady=10)
-output_text_not = ScrolledText(frame_status, width=100, height=40)
-output_text_not.grid(row=1, column=1, padx=10, pady=10)
+# frame_status = tk.Frame(root, bg="lightgray", height=50)
+# frame_status.pack(expand=True)
+
+# tk.Label(frame_status, text= "Encontrado").grid(row=0, column= 0, padx=5, pady=5)
+# tk.Label(frame_status, text= "No Encontrado").grid(row=0, column= 1, padx=5, pady=5)
+# output_text_foud = ScrolledText(frame_status, width=100, height=40)
+# output_text_foud.grid(row=1, column=0, padx=10, pady=10)
+# output_text_not = ScrolledText(frame_status, width=100, height=40)
+# output_text_not.grid(row=1, column=1, padx=10, pady=10)
 
 
-negrita = font.Font(output_text_foud, output_text_foud.cget("font"))
-negrita.configure(weight="bold")
+# negrita = font.Font(output_text_foud, output_text_foud.cget("font"))
+# negrita.configure(weight="bold")
 
-output_text_foud.tag_configure("negrita", font=negrita)
+# output_text_foud.tag_configure("negrita", font=negrita)
 
-negrita = font.Font(output_text_not, output_text_not.cget("font"))
-negrita.configure(weight="bold")
+# negrita = font.Font(output_text_not, output_text_not.cget("font"))
+# negrita.configure(weight="bold")
 
-top_frame.grid_columnconfigure(0, weight=1)
-top_frame.grid_columnconfigure(1, weight=1)
+# top_frame.grid_columnconfigure(0, weight=1)
+# top_frame.grid_columnconfigure(1, weight=1)
 
 #------- down frame --------------
 
-down_frame = tk.Frame(root, bg="lightgray", height=50)
+down_frame = tk.Frame(root, bg="blue", height=50)
 down_frame.pack(fill="x", expand=True)
 # Crear una tag con esa fuente
-output_text_not.tag_configure("negrita", font=negrita)
+#output_text_not.tag_configure("negrita", font=negrita)
 
 label_firma = tk.Label(down_frame, text="Por Rodrigo García (RGARC450)", fg="gray", font=("Arial", 10, "italic"))
 label_firma.grid(row=0, column=1, sticky="se", padx=10, pady=5)
@@ -97,5 +97,6 @@ label_firma.grid(row=0, column=1, sticky="se", padx=10, pady=5)
 # root.grid_rowconfigure(4, weight=1)
 # root.grid_rowconfigure(99, weight=1)
 
-finder_ = finder(output_text_foud, output_text_not)
+finder_ = finder()
+fcf = file_check_frame()
 root.mainloop()

@@ -13,9 +13,9 @@ from tkinter import ttk #para barra de carga
 
 
 class finder():
-    def __init__(self, output_text_1, output_text_2):
-        self.output_text = output_text_1
-        self.output_text_2 = output_text_2
+    def __init__(self):
+        #self.output_text = output_text_1
+        #self.output_text_2 = output_text_2
         self.file_check= {}
 
     def buscar_en_txt(self, ruta, palabra):
@@ -26,18 +26,18 @@ class finder():
             for i, linea in enumerate(f, 1):
                 if palabra.lower() in linea.lower():
                     print(f"[TXT] {ruta} (línea {i}): {linea.strip()}")
-                    self.output_text.insert(tk.END, f"Palabra")
-                    self.output_text.insert(tk.END, f" {palabra}", "negrita")
-                    self.output_text.insert(tk.END, f" encontrada\n")
-                    self.output_text.insert(tk.END, f"[TXT] {ruta} (línea {i}): {linea.strip()}\n\n")
+                    # self.output_text.insert(tk.END, f"Palabra")
+                    # self.output_text.insert(tk.END, f" {palabra}", "negrita")
+                    # self.output_text.insert(tk.END, f" encontrada\n")
+                    # self.output_text.insert(tk.END, f"[TXT] {ruta} (línea {i}): {linea.strip()}\n\n")
                     self.file_check[ruta] = True
                     found = True
         if found == False:
             print(f"[TXT] {ruta} (línea {i}): {linea.strip()}")
-            self.output_text_2.insert(tk.END, f"Palabra")
-            self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
-            self.output_text_2.insert(tk.END, f" NO encontrada\n")
-            self.output_text_2.insert(tk.END, f"[TXT] {ruta} (línea {i}): {linea.strip()}\n\n")
+            # self.output_text_2.insert(tk.END, f"Palabra")
+            # self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
+            # self.output_text_2.insert(tk.END, f" NO encontrada\n")
+            # self.output_text_2.insert(tk.END, f"[TXT] {ruta} (línea {i}): {linea.strip()}\n\n")
 
     def buscar_en_pdf(self, ruta, palabra):
         self.file_check[ruta] = False
@@ -49,22 +49,22 @@ class finder():
                     texto = page.extract_text() or ""
                     if palabra.lower() in texto.lower():
                         print(f"[PDF] {ruta} (página {i+1}): contiene la palabra")
-                        self.output_text.insert(tk.END, f"Palabra")
-                        self.output_text.insert(tk.END, f" {palabra}", "negrita")
-                        self.output_text.insert(tk.END, f" encontrada\n")
-                        self.output_text.insert(tk.END, f"[PDF] {ruta} (página {i+1})\n\n")
+                        # self.output_text.insert(tk.END, f"Palabra")
+                        # self.output_text.insert(tk.END, f" {palabra}", "negrita")
+                        # self.output_text.insert(tk.END, f" encontrada\n")
+                        # self.output_text.insert(tk.END, f"[PDF] {ruta} (página {i+1})\n\n")
                         self.file_check[ruta] = True
                         found = True
             if found == False:
                 print(f"[PDF] {ruta}. Palabra no encontrada")
-                self.output_text_2.insert(tk.END, f"Palabra")
-                self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
-                self.output_text_2.insert(tk.END, f" NO encontrada\n")
-                self.output_text_2.insert(tk.END, f"[PDF] {ruta}\n\n")
+                # self.output_text_2.insert(tk.END, f"Palabra")
+                # self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
+                # self.output_text_2.insert(tk.END, f" NO encontrada\n")
+                # self.output_text_2.insert(tk.END, f"[PDF] {ruta}\n\n")
 
         except:
             print(f"[PDF] No se pudo leer {ruta}")
-            self.output_text_2.insert(tk.END, f"[PDF] No se pudo leer {ruta}\n\n")
+            #self.output_text_2.insert(tk.END, f"[PDF] No se pudo leer {ruta}\n\n")
 
     def buscar_en_docx(self, ruta, palabra):
         self.file_check[ruta] = False
@@ -74,22 +74,22 @@ class finder():
             for i, p in enumerate(doc.paragraphs):
                 if palabra.lower() in p.text.lower():
                     print(f"[DOCX] {ruta} (párrafo {i+1}): {p.text.strip()}")
-                    self.output_text.insert(tk.END, f"\nPalabra")
-                    self.output_text.insert(tk.END, f" {palabra}", "negrita")
-                    self.output_text.insert(tk.END, f" encontrada\n")
-                    self.output_text.insert(tk.END, f"[DOCX] {ruta} (párrafo {i+1}): {p.text.strip()}\n\n")
+                    # self.output_text.insert(tk.END, f"\nPalabra")
+                    # self.output_text.insert(tk.END, f" {palabra}", "negrita")
+                    # self.output_text.insert(tk.END, f" encontrada\n")
+                    # self.output_text.insert(tk.END, f"[DOCX] {ruta} (párrafo {i+1}): {p.text.strip()}\n\n")
                     self.file_check[ruta] = True
                     found = True
             
             if found == False:
                 print(f"[DOCX] {ruta}. Palabra no encontrada")
-                self.output_text_2.insert(tk.END, f"Palabra")
-                self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
-                self.output_text_2.insert(tk.END, f" NO encontrada\n")
-                self.output_text_2.insert(tk.END, f"[DOCX] {ruta}\n\n")
+                # self.output_text_2.insert(tk.END, f"Palabra")
+                # self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
+                # self.output_text_2.insert(tk.END, f" NO encontrada\n")
+                # self.output_text_2.insert(tk.END, f"[DOCX] {ruta}\n\n")
         except:
             print(f"[DOCX] No se pudo leer {ruta}")
-            self.output_text_2.insert(tk.END, f"[DOCX] No se pudo leer {ruta}")
+            #self.output_text_2.insert(tk.END, f"[DOCX] No se pudo leer {ruta}")
 
     def buscar_en_xlsx(self, ruta, palabra):
         self.file_check[ruta] = False
@@ -102,23 +102,23 @@ class finder():
                     for celda in fila:
                         if isinstance(celda, str) and palabra.lower() in celda.lower():
                             print(f"[XLSX] {ruta} (hoja '{hoja}'): contiene la palabra")
-                            self.output_text.insert(tk.END, f"\nPalabra")
-                            self.output_text.insert(tk.END, f" {palabra}", "negrita")
-                            self.output_text.insert(tk.END, f" encontrada\n")
-                            self.output_text.insert(tk.END, f"[XLSX] {ruta} (hoja '{hoja}')\n\n")
+                            # self.output_text.insert(tk.END, f"\nPalabra")
+                            # self.output_text.insert(tk.END, f" {palabra}", "negrita")
+                            # self.output_text.insert(tk.END, f" encontrada\n")
+                            # self.output_text.insert(tk.END, f"[XLSX] {ruta} (hoja '{hoja}')\n\n")
                             self.file_check[ruta] = True
                             found = True
                             break
             if found == False:
                 print(f"[XLSX] {ruta}. Palabra NO encontrada")
-                self.output_text_2.insert(tk.END, f"Palabra")
-                self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
-                self.output_text_2.insert(tk.END, f" NO encontrada\n")
-                self.output_text_2.insert(tk.END, f"[XLSX] {ruta}.\n\n")
+                # self.output_text_2.insert(tk.END, f"Palabra")
+                # self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
+                # self.output_text_2.insert(tk.END, f" NO encontrada\n")
+                # self.output_text_2.insert(tk.END, f"[XLSX] {ruta}.\n\n")
             
         except:
             print(f"[XLSX] No se pudo leer {ruta}")
-            self.output_text_2.insert(tk.END, f"[XLSX] No se pudo leer {ruta}")
+            #self.output_text_2.insert(tk.END, f"[XLSX] No se pudo leer {ruta}")
 
     def buscar_en_rtf(self, ruta, palabra):
         self.file_check[ruta] = False
@@ -127,18 +127,18 @@ class finder():
             texto = rtf_to_text(contenido_rtf)
             if palabra.lower() in texto.lower():
                 print(f"[RTF] {ruta}  contiene la palabra")
-                self.output_text.insert(tk.END, f"\nPalabra")
-                self.output_text.insert(tk.END, f" {palabra}", "negrita")
-                self.output_text.insert(tk.END, f" encontrada\n")
-                self.output_text.insert(tk.END, f"[RTF] {ruta}\n\n")
+                # self.output_text.insert(tk.END, f"\nPalabra")
+                # self.output_text.insert(tk.END, f" {palabra}", "negrita")
+                # self.output_text.insert(tk.END, f" encontrada\n")
+                # self.output_text.insert(tk.END, f"[RTF] {ruta}\n\n")
                 self.file_check[ruta] = True
                 return
             
             print(f"[RTF] {ruta}. Palabra NO encontrada")
-            self.output_text_2.insert(tk.END, f"Palabra")
-            self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
-            self.output_text_2.insert(tk.END, f" NO encontrada\n")
-            self.output_text_2.insert(tk.END, f"[RTF] {ruta}.\n\n")  
+            # self.output_text_2.insert(tk.END, f"Palabra")
+            # self.output_text_2.insert(tk.END, f" {palabra}", "negrita")
+            # self.output_text_2.insert(tk.END, f" NO encontrada\n")
+            # self.output_text_2.insert(tk.END, f"[RTF] {ruta}.\n\n")  
 
             
 
