@@ -1,7 +1,7 @@
 from tkinter import filedialog, messagebox, font
 from tkinter.scrolledtext import ScrolledText
 from word_finder import finder, tk
-from file_check_window import file_check_frame
+from file_check import file_check 
 
 def buscar():
     carpeta = entry_carpeta.get()
@@ -14,7 +14,7 @@ def buscar():
     #output_text_foud.delete("1.0", tk.END)
     #output_text_not.delete("1.0", tk.END)
     finder_.find_word_in_file(carpeta, palabra)
-    fcf.file_check_window(root, finder_)
+    fcf.file_check_method(root, finder_)
 
 def seleccionar_carpeta():
     carpeta = filedialog.askdirectory()
@@ -30,20 +30,21 @@ root = tk.Tk()
 root.geometry("1000x600") 
 root.title("Word Finder")
 
+
 # ---------- top frame ---------------------
 
-top_frame = tk.Frame(root, bg="blue", height=50)
+top_frame = tk.Frame(root, bg="skyblue", height=50)
 top_frame.pack(fill="x")
 
 # Etiqueta y entrada para carpeta
-tk.Label(top_frame, text="Carpeta a buscar:").grid(row=0, column=0, padx=5, pady=5)
+tk.Label(top_frame, text="Carpeta a buscar:", bg="skyblue").grid(row=0, column=0, padx=5, pady=5)
 entry_carpeta = tk.Entry(top_frame, width=40)
 entry_carpeta.grid(row=0, column=1, padx=5, pady=5)
 btn_carpeta = tk.Button(top_frame, text="Seleccionar", command=seleccionar_carpeta)
 btn_carpeta.grid(row=0, column=2, padx=5, pady=5)
 
 # Etiqueta y entrada para palabra/frase
-tk.Label(top_frame, text="Palabra o frase:").grid(row=1, column=0, padx=5, pady=5)
+tk.Label(top_frame, text="Palabra o frase:", bg="skyblue").grid(row=1, column=0, padx=5, pady=5)
 entry_palabra = tk.Entry(top_frame, width=40)
 entry_palabra.grid(row=1, column=1, padx=5, pady=5)
 
@@ -83,14 +84,14 @@ top_frame.grid_columnconfigure(2, weight=1)
 
 #------- down frame --------------
 
-down_frame = tk.Frame(root, bg="blue", height=50)
-down_frame.pack(fill="x", expand=True)
+down_frame = tk.Frame(root, bg="skyblue", height=50)
+down_frame.pack(side="bottom",fill="x", expand=True)
 # Crear una tag con esa fuente
 #output_text_not.tag_configure("negrita", font=negrita)
 
-label_firma = tk.Label(down_frame, text="Por Rodrigo García (RGARC450)", fg="gray", font=("Arial", 10, "italic"))
-label_firma.grid(row=0, column=1, sticky="se", padx=10, pady=5)
-
+label_firma = tk.Label(down_frame, text="Por Rodrigo García (RGARC450)", fg="gray", bg = "skyblue", font=("Arial", 10, "italic"))
+label_firma.grid(row=0, column=0, sticky="se", padx=10, pady=5)
+label_firma.grid_columnconfigure(0, weight=1)
 # root.grid_columnconfigure(0, weight=1)
 # root.grid_columnconfigure(1, weight=1)
 # root.grid_rowconfigure(3, weight=1)
@@ -98,5 +99,5 @@ label_firma.grid(row=0, column=1, sticky="se", padx=10, pady=5)
 # root.grid_rowconfigure(99, weight=1)
 
 finder_ = finder()
-fcf = file_check_frame()
+fcf = file_check()
 root.mainloop()
